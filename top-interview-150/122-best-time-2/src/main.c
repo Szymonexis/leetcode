@@ -1,10 +1,18 @@
 #include "main.h"
 
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int main() {
-  printf("Hello world!\n");
+  int size = 6;
+  int arr[] = {7, 1, 5, 3, 6, 4};
+
+  int max = maxProfit(arr, size);
+
+  printArray(arr, size);
+  printf("maxProfit: %d\n", max);
+
   return 0;
 }
 
@@ -48,7 +56,43 @@ Example 3:
   stock to achieve the maximum profit of 0.
 ```
 */
-int maxProfit(int* arr, int size) {}
+/*
+chuj, nie dziala dla tego:
+
+Input: [1,2,3,4,5]
+Output: 0
+Expected: 4
+
+*/
+int maxProfit(int* arr, int size) {
+  if (size == 0) return 0;
+
+  int minFound = 0;
+  int sum = 0;
+  int min = 0;
+  int max = 0;
+
+  for (int i = 1; i < size; ++i) {
+    if (arr[i] < arr[min] && minFound == 0) {
+      min = i;
+      max = min;
+    } else if (arr[i] > arr[max]) {
+      minFound = 1;
+      max = i;
+    } else {
+      sum += arr[max] - arr[min];
+      max = i;
+      min = i;
+      minFound = 0;
+    }
+
+    // printf("sum: %d\tmin: %d\tmax: %d\tarr[min]: %d\tarr[max]: %d\n", sum,
+    // min,
+    //        max, arr[min], arr[max]);
+  }
+
+  return sum;
+}
 
 void printArray(int* arr, int size) {
   printf("[");
