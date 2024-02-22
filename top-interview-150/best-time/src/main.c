@@ -26,22 +26,22 @@ achieve any profit, return 0.
 */
 // O(n log n) attempt is good but seems to be taking too long...
 int maxProfit(int* arr, int size) {
-  int j = 0;
-  for (int i = 0; i < size; ++i) {
-    if (arr[i] > arr[j]) {
-      j = i;
+  if (size == 0) return 0;
+
+  int minPrice = arr[0];
+  int maxProfit = 0;
+
+  for (int i = 1; i < size; ++i) {
+    if (arr[i] < minPrice) {
+      minPrice = arr[i];
+    }
+
+    if (arr[i] - minPrice >= maxProfit) {
+      maxProfit = arr[i] - minPrice;
     }
   }
 
-  int max = 0;
-  for (int i = 0; i < j; ++i) {
-    int diff = arr[j] - arr[i];
-    if (diff > max) {
-      max = diff;
-    }
-  }
-
-  return max;
+  return maxProfit;
 }
 
 void printArray(int* arr, int size) {
