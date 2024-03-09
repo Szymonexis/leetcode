@@ -7,6 +7,14 @@
 int main() {
   int size = 6;
   int arr[] = {7, 1, 5, 3, 6, 4};
+  // int size = 5;
+  // int arr[] = {7, 6, 4, 3, 1};
+  // int size = 5;
+  // int arr[] = {1, 2, 3, 4, 5};
+  // int size = 6;
+  // int arr[] = {6, 1, 3, 2, 4, 7};
+  // int size = 3;
+  // int arr[] = {2, 1, 4};
 
   int max = maxProfit(arr, size);
 
@@ -56,51 +64,95 @@ Example 3:
   stock to achieve the maximum profit of 0.
 ```
 */
-/*
-chuj, nie dziala dla tego:
-
-Input: [1,2,3,4,5]
-Output: 0
-Expected: 4
-
-*/
-int maxProfit(int* arr, int size) {
+int maxProfit(int *arr, int size) {
   if (size == 0) return 0;
 
-  int minFound = 0;
-  int sum = 0;
   int min = 0;
   int max = 0;
+  int sum = 0;
+  int lookingForMin = 1;
 
-  for (int i = 1; i < size; ++i) {
-    if (arr[i] < arr[min] && minFound == 0) {
-      min = i;
-      max = min;
-    } else if (arr[i] > arr[max]) {
-      minFound = 1;
-      max = i;
+  int rows = size / 2;
+  int cols = 2;
+  int mmpi = 0;
+  int **minMaxPairs = (int **)malloc(rows * sizeof(int *));
+  for (int i = 0; i < rows; ++i) {
+    minMaxPairs[i] = (int *)malloc(cols * sizeof(int));
+
+    minMaxPairs[i][0] = 0;
+    minMaxPairs[i][1] = 0;
+  }
+
+  for (int i = 0; i < size; ++i) {
+    if (lookingForMin) {
+      if (arr[min] > arr[i]) {
+        min = i;
+      } else {
+        lookingForMin = 0;
+        max = i;
+      }
     } else {
-      sum += arr[max] - arr[min];
-      max = i;
-      min = i;
-      minFound = 0;
+      if (arr[max] < arr[i]) {
+        max = i;
+      } else {
+        lookingForMin = 1;
+        minMaxPairs[mmpi][0] = min;
+        minMaxPairs[mmpi][1] = max;
+        if (!(!min && !max)) {
+          mmpi++;
+        }
+        min = i;
+      }
+    }
+  }
+
+  if (arr[min] < arr[max] && max && mmpi < size / 2) {
+    minMaxPairs[mmpi][0] = min;
+    minMaxPairs[mmpi][1] = max;
+  }
+
+  print2DArray(minMaxPairs, size / 2, 2);
+
+  for (int i = 0; i < size / 2; ++i) {
+    int min = minMaxPairs[i][0];
+    int max = minMaxPairs[i][1];
+
+    if (!min && !max || min >= max) {
+      continue;
     }
 
-    // printf("sum: %d\tmin: %d\tmax: %d\tarr[min]: %d\tarr[max]: %d\n", sum,
-    // min,
-    //        max, arr[min], arr[max]);
+    sum += arr[max] - arr[min];
   }
 
   return sum;
 }
 
-void printArray(int* arr, int size) {
+void printArray(int *arr, int size) {
   printf("[");
   for (int i = 0; i < size; ++i) {
     printf("%d", arr[i]);
     if (i < size - 1) {
       printf(", ");
     }
+  }
+  printf("]\n");
+}
+
+void print2DArray(int **arr, int rows, int cols) {
+  printf("[\n");
+  for (int i = 0; i < rows; ++i) {
+    printf("  [");
+    for (int j = 0; j < cols; ++j) {
+      printf("%d", arr[i][j]);
+      if (j < cols - 1) {
+        printf(", ");
+      }
+    }
+    printf("]");
+    if (i < rows - 1) {
+      printf(",");
+    }
+    printf("\n");
   }
   printf("]\n");
 }
