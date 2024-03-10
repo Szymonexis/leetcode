@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int jump(int* a, int s);
+int jump(int* arr, int size);
 void printArray(int* arr, int size);
 
 #endif  // MAIN_H

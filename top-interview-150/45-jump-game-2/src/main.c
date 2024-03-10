@@ -16,33 +16,34 @@ int main() {
 }
 
 /*
-You are given a 0-indexed array of integers a of length s. You are initially
-positioned at a[0].
+You are given arr 0-indexed array of integers arr of length size. You are
+initially positioned at arr[0].
 
-Each element a[i] represents the maximum length of a forward jump from index
-i. In other words, if you are at a[i], you can jump to any a[i + j] where:
+Each element arr[i] represents the maximum length of arr forward jump from index
+i. In other words, if you are at arr[i], you can jump to any arr[i + j] where:
 
-0 <= j <= a[i] and
-i + j < s
+0 <= j <= arr[i]
+and
+i + j < size
 
-Return the minimum number of jumps to reach a[s - 1]. The test cases are
-generated such that you can reach a[s - 1].
+Return the minimum number of jumps to reach arr[size - 1]. The test cases are
+generated such that you can reach arr[size - 1].
 */
-int jump(int* a, int s) {
-  if (s == 1) {
+int jump(int* arr, int size) {
+  if (size == 1) {
     return 0;
   }
 
   int maxReach = 0;
   int jumps = 0;
-  for (int i = 0; i < s - 1; ++i) {
-    int newMaxReach = i + a[i];
+  for (int i = 0; i < size - 1; ++i) {
+    int newMaxReach = i + arr[i];
     if (maxReach < newMaxReach) {
       maxReach = newMaxReach;
       jumps++;
     }
 
-    if (maxReach >= s - 1) {
+    if (maxReach >= size - 1) {
       break;
     }
   }
