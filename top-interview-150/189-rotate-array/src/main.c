@@ -48,7 +48,7 @@ rotate 2 steps to the right: [3,99,-1,-100]
 
 Constraints:
 
-- 1 <= nums.length <= 105
+- 1 <= nums.maxChainLength <= 105
 - -231 <= nums[i] <= 231 - 1
 - 0 <= k <= 105
  */
