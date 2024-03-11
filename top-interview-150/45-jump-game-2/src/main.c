@@ -1,5 +1,7 @@
 #include "main.h"
 
+#define min(a, b) (a < b ? a : b)
+
 int main() {
   // int size = 5;
   // int arr[] = {2, 3, 1, 1, 4};
@@ -34,18 +36,30 @@ int jump(int* arr, int size) {
     return 0;
   }
 
-  int maxReach = 0;
-  int jumps = 0;
-  for (int i = 0; i < size - 1; ++i) {
-    int newMaxReach = i + arr[i];
-    if (maxReach < newMaxReach) {
-      maxReach = newMaxReach;
-      jumps++;
+  const int target = size - 1;
+  int i = 0;
+  int range = arr[i];
+  int jumps = 1;
+  lprintf("range: %d\ti: %d\n", range, i);
+  while (i + range < target) {
+    int nextRange = 0;
+    int nextI = i;
+    for (int j = i + 1; j <= min(target, i + range); ++j) {
+      printArray(&arr[i], size - i);
+      lprintf("nextRangeCandidate: %d\tarr[j]: %d\tj: %d\n",
+              arr[j] - (range - j), arr[j], j);
+      int nextRangeCandidate = arr[j] - (range - j);
+      if (nextRange < nextRangeCandidate) {
+        nextRange = arr[j];
+        nextI = j;
+      }
     }
 
-    if (maxReach >= size - 1) {
-      break;
-    }
+    range = nextRange;
+    i = nextI;
+    ++jumps;
+
+    lprintf("range: %d\ti: %d\n", range, i);
   }
 
   return jumps;
@@ -60,4 +74,22 @@ void printArray(int* arr, int size) {
     }
   }
   printf("]\n");
+}
+
+void lprintf(const char* format, ...) {
+  va_list args;
+  va_start(args, format);
+
+  char* prefix = "[LOG]: ";
+  int prefixLen = strlen(prefix);
+  int newFormatLength = strlen(format) + prefixLen + 1;
+  char* newFormat = malloc(newFormatLength * sizeof(char));
+
+  strcpy(newFormat, prefix);
+  strcat(newFormat, format);
+
+  vprintf(newFormat, args);
+
+  va_end(args);
+  free(newFormat);
 }
