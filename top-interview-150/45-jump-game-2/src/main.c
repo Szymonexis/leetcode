@@ -6,9 +6,12 @@ int main() {
   // int size = 5;
   // int arr[] = {2, 3, 1, 1, 4};
   // int expected = 2;
-  int size = 5;
-  int arr[] = {2, 3, 0, 1, 4};
-  int expected = 2;
+  // int size = 5;
+  // int arr[] = {2, 3, 0, 1, 4};
+  // int expected = 2;
+  int size = 12;
+  int arr[] = {5, 9, 3, 2, 1, 0, 2, 3, 3, 1, 0, 0};
+  int expected = 3;
 
   int result = jump(arr, size);
 
@@ -40,16 +43,16 @@ int jump(int* arr, int size) {
   int i = 0;
   int range = arr[i];
   int jumps = 1;
-  lprintf("range: %d\ti: %d\n", range, i);
-  while (i + range < target) {
-    int nextRange = 0;
+  int iRange = i + range;
+  while (iRange < target) {
+    int rangeCandidate = INT16_MIN;
+    int nextRange = range;
     int nextI = i;
-    for (int j = i + 1; j <= min(target, i + range); ++j) {
-      printArray(&arr[i], size - i);
-      lprintf("nextRangeCandidate: %d\tarr[j]: %d\tj: %d\n",
-              arr[j] - (range - j), arr[j], j);
+    int upperBound = target < iRange ? target : iRange;
+    for (int j = i + 1; j <= upperBound; ++j) {
       int nextRangeCandidate = arr[j] - (range - j);
-      if (nextRange < nextRangeCandidate) {
+      if (rangeCandidate < nextRangeCandidate && arr[j] != 0) {
+        rangeCandidate = nextRangeCandidate;
         nextRange = arr[j];
         nextI = j;
       }
@@ -57,9 +60,8 @@ int jump(int* arr, int size) {
 
     range = nextRange;
     i = nextI;
+    iRange = i + range;
     ++jumps;
-
-    lprintf("range: %d\ti: %d\n", range, i);
   }
 
   return jumps;
