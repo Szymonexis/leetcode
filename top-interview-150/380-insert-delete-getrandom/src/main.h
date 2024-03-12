@@ -7,19 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct RandomizedSet {
-  int** values;
-  unsigned int size;
-  unsigned int capacity;
-  int hash;
-  unsigned int maxChainLength;
-} RandomizedSet;
-
-RandomizedSet* randomizedSetCreate();
-bool randomizedSetInsert(RandomizedSet* obj, int val);
-bool randomizedSetRemove(RandomizedSet* obj, int val);
-int randomizedSetGetRandom(RandomizedSet* obj);
-void randomizedSetFree(RandomizedSet* obj);
+#include "./array/array.h"
+// #include "./randomized-set/randomized-set.h"
 
 void printArray(int* arr, int size);
 

@@ -31,51 +31,6 @@ O(1) time complexity.
  * randomizedSetFree(obj);
 */
 
-RandomizedSet* randomizedSetCreate() {
-  RandomizedSet* set = malloc(sizeof(RandomizedSet));
-  if (set == NULL) {
-    return NULL;
-  }
-
-  srand(time(NULL));
-
-  unsigned int initialSize = 0;
-  unsigned int initialCapacity = 10;
-  unsigned int initialHash = 1;
-
-  set->size = initialSize;
-  set->capacity = initialCapacity;
-  set->hash = initialHash;
-  set->maxChainLength = initialCapacity;
-
-  int valuesSize = (int)ceil(initialHash / (float)initialCapacity);
-  set->values = malloc(valuesSize * sizeof(int*));
-  if (set->values == NULL) {
-    free(set);
-    return NULL;
-  }
-
-  set->values[0] = malloc(initialCapacity * sizeof(int));
-  if (set->values[0] == NULL) {
-    free(set->values);
-    free(set);
-    return NULL;
-  }
-
-  return set;
-}
-
-bool randomizedSetInsert(RandomizedSet* obj, int val) {
-  
-}
-
-// binary search
-bool randomizedSetRemove(RandomizedSet* obj, int val) {}
-
-int randomizedSetGetRandom(RandomizedSet* obj) {}
-
-void randomizedSetFree(RandomizedSet* obj) {}
-
 void printArray(int* arr, int size) {
   printf("[");
   for (int i = 0; i < size; ++i) {
@@ -88,6 +43,16 @@ void printArray(int* arr, int size) {
 }
 
 int main() {
-  printf("Hello world!\n");
+  Array* array = arrayCreate(1, true, false, -1);
+
+  int arr[] = {1, 3, 3, 5, -1, -2, 4, 5, 3, 2, 7, 9};
+  int size = sizeof(arr) / sizeof(int);
+
+  for (int i = 0; i < size; ++i) {
+    arrayInsert(array, arr[i]);
+  }
+
+  arrayPrint(array);
+
   return 0;
 }
