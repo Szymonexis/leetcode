@@ -1,11 +1,11 @@
 #include "array.h"
 
-Array* arrayCreate(u_int16_t initialCapacity, bool allowResize,
+Array* arrayCreate(unsigned int initialCapacity, bool allowResize,
                    bool allowDuplicates, int allowSorting) {
   Array* array = malloc(sizeof(Array));
 
   bool capIsPowerOfTwo = _isPowerOfTwo(initialCapacity);
-  u_int16_t capacity = allowResize && capIsPowerOfTwo ? initialCapacity : 1;
+  unsigned int capacity = allowResize && capIsPowerOfTwo ? initialCapacity : 1;
 
   array->allowResize = allowResize;
   array->allowDuplicates = allowDuplicates;
@@ -23,13 +23,13 @@ void arrayFree(Array* array) {
 }
 
 bool arrayInsert(Array* array, int val) {
-  if (array->size >= INT16_MAX) return false;
+  if (array->size >= LONG_MAX) return false;
   if (!array->allowResize && array->size == array->capacity) return false;
   if (!array->allowDuplicates && arrayFindIndex(array, val) != -1) return false;
 
   if (array->size == array->capacity) {
     array->capacity *= 2;
-    array->values = realloc(array->values, array->capacity);
+    array->values = realloc(array->values, array->capacity * sizeof(int));
   }
 
   array->values[array->size] = val;
@@ -40,7 +40,7 @@ bool arrayInsert(Array* array, int val) {
   return true;
 }
 
-int16_t arrayFindIndex(Array* array, int val) {
+long int arrayFindIndex(Array* array, int val) {
   // perform normal linear search
   if (!array->allowSorting) {
     for (int i = 0; i < array->size; ++i) {
@@ -49,14 +49,14 @@ int16_t arrayFindIndex(Array* array, int val) {
   }
 
   // perform faster binary search
-  u_int16_t lo = 0, hi = array->size - 1;
+  unsigned int lo = 0, hi = array->size - 1;
 
   if (array->values[lo] == val) return lo;
   if (array->values[hi] == val) return hi;
 
   bool desc = array->allowSorting < 0;
   while (lo <= hi && lo >= 0 && hi < array->size) {
-    uint16_t mid = lo + (hi - lo) / 2;
+    unsigned int mid = lo + (hi - lo) / 2;
 
     if (array->values[mid] == val) {
       return mid;
@@ -72,16 +72,16 @@ int16_t arrayFindIndex(Array* array, int val) {
   return -1;
 }
 
-int16_t arrayPopVal(Array* array, int val) {
+long int arrayPopVal(Array* array, int val) {
   int index = arrayFindIndex(array, val);
 
-  if (index == -1) return INT16_MIN;
+  if (index == -1) return LONG_MIN;
 
   int foundValue = array->values[index];
 
-  u_int16_t newSize = array->size - 1;
+  unsigned int newSize = array->size - 1;
   bool skipped = false;
-  for (u_int16_t i = 0, j = 0; j < newSize; ++i, ++j) {
+  for (unsigned int i = 0, j = 0; j < newSize; ++i, ++j) {
     if (!skipped && i == index) {
       skipped = true;
       ++i;
@@ -100,16 +100,16 @@ int16_t arrayPopVal(Array* array, int val) {
   return foundValue;
 }
 
-int16_t arrayPopIndex(Array* array, u_int16_t index) {
+int arrayPopIndex(Array* array, unsigned int index) {
   if (index > array->size - 1) {
-    return INT16_MIN;
+    return INT_MIN;
   }
 
   int foundValue = array->values[index];
 
-  u_int16_t newSize = array->size - 1;
+  unsigned int newSize = array->size - 1;
   bool skipped = false;
-  for (u_int16_t i = 0, j = 0; j < newSize; ++i, ++j) {
+  for (unsigned int i = 0, j = 0; j < newSize; ++i, ++j) {
     if (!skipped && i == index) {
       skipped = true;
       ++i;
@@ -161,7 +161,7 @@ void _sort(Array* array) {
     return;
   }
 
-  u_int16_t size = array->size;
+  unsigned int size = array->size;
   int* a = array->values;
   int* b = malloc(size * sizeof(int));
 
@@ -222,4 +222,4 @@ bool _compareAsc(int a, int b, bool soft) { return soft ? a < b : a <= b; }
 
 bool _compareDesc(int a, int b, bool soft) { return soft ? a > b : a >= b; }
 
-bool _isPowerOfTwo(u_int16_t x) { return x != 0 && (x & (x - 1)) == 0; }
+bool _isPowerOfTwo(unsigned int x) { return x != 0 && (x & (x - 1)) == 0; }

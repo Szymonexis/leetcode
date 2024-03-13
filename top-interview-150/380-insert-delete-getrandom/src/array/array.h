@@ -1,14 +1,15 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef struct Array {
   int* values;
-  u_int16_t size;
-  u_int16_t capacity;
+  unsigned int size;
+  unsigned int capacity;
   bool allowResize;
   bool allowDuplicates;
   int allowSorting;
@@ -22,7 +23,7 @@ typedef struct Array {
 /// @param allowSorting if < 0 then in desc order, > 0 asc order, == 0 no
 /// sorting
 /// @return an initialized Array struct
-Array* arrayCreate(u_int16_t initialCapacity, bool allowResize,
+Array* arrayCreate(unsigned int initialCapacity, bool allowResize,
                    bool allowDuplicates, int allowSorting);
 
 /// @brief frees all allocated memory associated with Array struct
@@ -39,19 +40,19 @@ bool arrayInsert(Array* array, int val);
 /// @param array
 /// @param val
 /// @return `-1` if value not found - index of value otherwise
-int16_t arrayFindIndex(Array* array, int val);
+long int arrayFindIndex(Array* array, int val);
 
 /// @brief
 /// @param array
 /// @param val
 /// @return `INT16_MIN` if value doesnt exist - found value otherwise
-int16_t arrayPopVal(Array* array, int val);
+long int arrayPopVal(Array* array, int val);
 
 /// @brief
 /// @param array
 /// @param index
 /// @return `INT16_MIN` if index is incorrect - value otherwise
-int16_t arrayPopIndex(Array* array, u_int16_t index);
+int arrayPopIndex(Array* array, unsigned int index);
 
 /// @brief prints the Array struct to stdout
 /// @param array
@@ -93,6 +94,6 @@ bool _compareDesc(int a, int b, bool soft);
 /// struct context
 /// @param x
 /// @return
-bool _isPowerOfTwo(u_int16_t x);
+bool _isPowerOfTwo(unsigned int x);
 
 #endif  // ARRAY_H

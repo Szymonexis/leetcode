@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <limits.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>

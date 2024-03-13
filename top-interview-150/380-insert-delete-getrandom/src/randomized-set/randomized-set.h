@@ -1,6 +1,7 @@
 #ifndef RANDOMIZED_SET_H
 #define RANDOMIZED_SET_H
 
+#include <limits.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>

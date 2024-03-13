@@ -3,7 +3,7 @@ all-cygwin: main-cygwin run-cygwin
 
 main-cygwin: src/*.c src/main.h
 	if not exist "target" mkdir target
-	gcc ./src/*.c -o ./target/main.exe
+	gcc ./src/*/*.c ./src/main.c -o ./target/main.exe
 
 run-cygwin: main-cygwin
 	./target/main.exe
