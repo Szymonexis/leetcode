@@ -33,7 +33,7 @@ Array* arrayCreate(unsigned int initialCapacity, bool allowResize,
 /// @param array
 void arrayFree(Array* array);
 
-/// @brief supports up to `INT16_MAX` size
+/// @brief supports up to limits.h `INT_MAX` size
 /// @param array
 /// @param val
 /// @return if insertion was successful or not

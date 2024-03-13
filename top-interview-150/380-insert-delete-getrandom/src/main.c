@@ -43,7 +43,13 @@ void printArray(int* arr, int size) {
 }
 
 int main() {
-  Array* array = arrayCreate(1, true, false, -1);
+  unsigned int initialCapacity = 1;
+  bool allowResize = true;
+  bool allowDuplicates = false;
+  int allowSorting = 1;
+
+  Array* array =
+      arrayCreate(initialCapacity, allowSorting, allowDuplicates, allowSorting);
 
   int arr[] = {1, 3, 3, 5, -1, -2, 4, 5, 3, 2, 7, 9};
   int size = sizeof(arr) / sizeof(int);

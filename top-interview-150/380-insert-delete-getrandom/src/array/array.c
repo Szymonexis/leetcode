@@ -23,7 +23,7 @@ void arrayFree(Array* array) {
 }
 
 bool arrayInsert(Array* array, int val) {
-  if (array->size >= LONG_MAX) return false;
+  if (array->size >= INT_MAX) return false;
   if (!array->allowResize && array->size == array->capacity) return false;
   if (!array->allowDuplicates && arrayFindIndex(array, val) != -1) return false;
 
@@ -49,13 +49,14 @@ long int arrayFindIndex(Array* array, int val) {
   }
 
   // perform faster binary search
-  unsigned int lo = 0, hi = array->size - 1;
+  unsigned int lo = 0, hi = array->size ? array->size - 1 : 0;
 
   if (array->values[lo] == val) return lo;
   if (array->values[hi] == val) return hi;
 
   bool desc = array->allowSorting < 0;
-  while (lo <= hi && lo >= 0 && hi < array->size) {
+  while (lo <= hi && lo >= 0 && lo < array->size && hi >= 0 &&
+         hi < array->size) {
     unsigned int mid = lo + (hi - lo) / 2;
 
     if (array->values[mid] == val) {
