@@ -1,8 +1,5 @@
 #include "main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int main() {
   int val = 3;
@@ -44,15 +41,14 @@ void printArray(int* arr, int size) {
   - Return k.
 */
 int removeElement(int* nums, int numsSize, int val) {
-    int j = 0;
-    for (int i = 0; i < numsSize; ++i) {
-        if (nums[i] == val) {
-            j++;
-        } else if (j > 0) {
-            nums[i - j] = nums[i];
-        }
+  int j = 0;
+  for (int i = 0; i < numsSize; ++i) {
+    if (nums[i] == val) {
+      j++;
+    } else if (j > 0) {
+      nums[i - j] = nums[i];
     }
+  }
 
-    return numsSize - j;
+  return numsSize - j;
 }
-

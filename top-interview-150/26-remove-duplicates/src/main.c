@@ -1,7 +1,5 @@
 #include "main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 
 int main() {
   int nums[10] = {1, 1, 1, 2, 3, 4, 4, 5, 6, 6};

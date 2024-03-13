@@ -2,9 +2,12 @@
 #define ARRAY_H
 
 #include <limits.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 typedef struct Array {
   int* values;

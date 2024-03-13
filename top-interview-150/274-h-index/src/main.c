@@ -1,8 +1,5 @@
 #include "main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 int main() {
   // int arr[] = {2, 3, 1, 2, 4, 2, 3, 3, 1, 2, 2, 3, 1};
   // int expected = 3;
