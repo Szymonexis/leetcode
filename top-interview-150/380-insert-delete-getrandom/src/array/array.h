@@ -36,8 +36,12 @@ void arrayFree(Array* array);
 /// @brief supports up to limits.h `INT_MAX` size
 /// @param array
 /// @param val
-/// @return if insertion was successful or not
-bool arrayInsert(Array* array, int val);
+/// @return 1 if over size limit, 2 if is full, 3 if duplicate, 0 when success
+int arrayInsert(Array* array, int val);
+
+/// @param array
+/// @return pointer to copy of array->values
+int* arrayGetValues(Array* array);
 
 /// @brief
 /// @param array
@@ -59,7 +63,7 @@ int arrayPopIndex(Array* array, unsigned int index);
 
 /// @brief prints the Array struct to stdout
 /// @param array
-void arrayPrint(Array* array);
+void arrayPrint(Array* array, char* prefix, int v);
 
 // helperFuncs
 

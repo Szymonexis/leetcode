@@ -43,22 +43,27 @@ void printArray(int* arr, int size) {
 }
 
 int main() {
-  unsigned int initialCapacity = 1;
-  bool allowResize = true;
-  bool allowDuplicates = false;
-  int allowSorting = 1;
-
-  Array* array =
-      arrayCreate(initialCapacity, allowSorting, allowDuplicates, allowSorting);
-
-  int arr[] = {1, 3, 3, 5, -1, -2, 4, 5, 3, 2, 7, 9};
-  int size = sizeof(arr) / sizeof(int);
-
+  int size = 150;
+  int offset = -60;
+  int* arr = malloc(size * sizeof(int));
   for (int i = 0; i < size; ++i) {
-    arrayInsert(array, arr[i]);
+    arr[i] = offset + i;
   }
 
-  arrayPrint(array);
+  RandomizedSet* set = randomizedSetCreate();
+
+  for (int i = 0; i < size; ++i) {
+    randomizedSetInsert(set, arr[i]);
+    randomizedSetPrint(set);
+    printf("\n");
+  }
+
+  for (int i = 0; i < size; ++i) {
+    // @TODO: doesnt remove the last element in array
+    randomizedSetRemove(set, arr[i]);
+    randomizedSetPrint(set);
+    printf("\n");
+  }
 
   return 0;
 }

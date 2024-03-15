@@ -5,7 +5,7 @@ Array* arrayCreate(unsigned int initialCapacity, bool allowResize,
   Array* array = malloc(sizeof(Array));
 
   bool capIsPowerOfTwo = _isPowerOfTwo(initialCapacity);
-  unsigned int capacity = allowResize && capIsPowerOfTwo ? initialCapacity : 1;
+  unsigned int capacity = !allowResize || capIsPowerOfTwo ? initialCapacity : 1;
 
   array->allowResize = allowResize;
   array->allowDuplicates = allowDuplicates;
@@ -22,10 +22,10 @@ void arrayFree(Array* array) {
   free(array);
 }
 
-bool arrayInsert(Array* array, int val) {
-  if (array->size >= INT_MAX) return false;
-  if (!array->allowResize && array->size == array->capacity) return false;
-  if (!array->allowDuplicates && arrayFindIndex(array, val) != -1) return false;
+int arrayInsert(Array* array, int val) {
+  if (array->size >= INT_MAX) return 1;
+  if (!array->allowResize && array->size == array->capacity) return 2;
+  if (!array->allowDuplicates && arrayFindIndex(array, val) != -1) return 3;
 
   if (array->size == array->capacity) {
     array->capacity *= 2;
@@ -37,15 +37,31 @@ bool arrayInsert(Array* array, int val) {
 
   if (array->allowSorting) _sort(array);
 
-  return true;
+  return 0;
+}
+
+int* arrayGetValues(Array* array) {
+  int* values = malloc(array->size * sizeof(int));
+
+  for (int i = 0; i < array->size; ++i) {
+    values[i] = array->values[i];
+  }
+
+  return values;
 }
 
 long int arrayFindIndex(Array* array, int val) {
+  if (array->size == 0) {
+    return -1;
+  }
+
   // perform normal linear search
   if (!array->allowSorting) {
     for (int i = 0; i < array->size; ++i) {
       if (array->values[i] == val) return i;
     }
+
+    return -1;
   }
 
   // perform faster binary search
@@ -129,31 +145,45 @@ int arrayPopIndex(Array* array, unsigned int index) {
   return foundValue;
 }
 
-void arrayPrint(Array* array) {
-  char* asc = "asc";
-  char* desc = "desc";
-  char* allowSorting = "none";
-  if (array->allowSorting > 0) allowSorting = asc;
-  if (array->allowSorting < 0) allowSorting = desc;
+void arrayPrint(Array* array, char* prefix, int v) {
+  if (v >= 1) {
+    if (v >= 2) {
+      char* asc = "asc";
+      char* desc = "desc";
+      char* allowSorting = "none";
+      if (array->allowSorting > 0) allowSorting = asc;
+      if (array->allowSorting < 0) allowSorting = desc;
 
-  char* allowDuplicates = array->allowDuplicates ? "true" : "false";
-  char* allowResize = array->allowResize ? "true" : "false";
+      char* allowDuplicates = array->allowDuplicates ? "true" : "false";
+      char* allowResize = array->allowResize ? "true" : "false";
 
-  printf("allowDuplicates: %s\n", allowDuplicates);
-  printf("allowResize: %s\n", allowResize);
-  printf("allowSorting: %s\n", allowSorting);
-  printf("capacity: %d\n", array->capacity);
-  printf("size: %d\n", array->size);
-
-  printf("values: [");
-  for (int i = 0; i < array->size; ++i) {
-    printf("%d", array->values[i]);
-
-    if (i < array->size - 1) {
-      printf(", ");
+      printf("%sallowDuplicates: %s\n", prefix, allowDuplicates);
+      printf("%sallowResize: %s\n", prefix, allowResize);
+      printf("%sallowSorting: %s\n", prefix, allowSorting);
+      printf("%scapacity: %d\n", prefix, array->capacity);
+      printf("%ssize: %d\n", prefix, array->size);
     }
+
+    printf("%svalues: [", prefix);
+    for (int i = 0; i < array->size; ++i) {
+      printf("%d", array->values[i]);
+
+      if (i < array->size - 1) {
+        printf(", ");
+      }
+    }
+    printf("]\n");
+  } else {
+    printf("%s[", prefix);
+    for (int i = 0; i < array->size; ++i) {
+      printf("%d", array->values[i]);
+
+      if (i < array->size - 1) {
+        printf(", ");
+      }
+    }
+    printf("]\n");
   }
-  printf("]\n");
 }
 
 // using non-recursive mergesort

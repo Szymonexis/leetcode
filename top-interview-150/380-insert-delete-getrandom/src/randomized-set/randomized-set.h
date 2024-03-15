@@ -12,17 +12,18 @@
 #include "../array/array.h"
 
 typedef struct RandomizedSet {
-  Array* chains;
-  unsigned int size;
-  unsigned int capacity;
-  int hash;
-  unsigned int maxChainLength;
+  Array** chains;
+  long long int hash;
+  unsigned long long int size;
 } RandomizedSet;
 
 RandomizedSet* randomizedSetCreate();
-void randomizedSetFree(RandomizedSet* obj);
-bool randomizedSetInsert(RandomizedSet* obj, int val);
-bool randomizedSetRemove(RandomizedSet* obj, int val);
-int randomizedSetGetRandom(RandomizedSet* obj);
+void randomizedSetFree(RandomizedSet* set);
+bool randomizedSetInsert(RandomizedSet* set, int val);
+bool randomizedSetRemove(RandomizedSet* set, int val);
+int randomizedSetGetRandom(RandomizedSet* set);
+
+// helpers
+void randomizedSetPrint(RandomizedSet* set);
 
 #endif  // RANDOMIZED_SET_H
