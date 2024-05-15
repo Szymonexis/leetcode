@@ -11,5 +11,6 @@
 #include <time.h>
 
 void printArray(int* arr, int size);
+int romanToInt(char* s);
 
 #endif  // MAIN_H

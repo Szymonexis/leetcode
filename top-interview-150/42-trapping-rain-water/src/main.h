@@ -10,6 +10,8 @@
 #include <string.h>
 #include <time.h>
 
+int trap(int* height, int heightSize);
 void printArray(int* arr, int size);
+void printMountains(int* arr, int size);
 
 #endif  // MAIN_H

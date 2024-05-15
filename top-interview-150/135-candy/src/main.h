@@ -10,6 +10,7 @@
 #include <string.h>
 #include <time.h>
 
+int candy(int* ratings, int ratingsSize);
 void printArray(int* arr, int size);
 
 #endif  // MAIN_H
