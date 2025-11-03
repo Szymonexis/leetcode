@@ -1,0 +1,13 @@
+{
+  "name": "./top-interview-150/27-remove-element",
+  "version": "1.0.0",
+  "description": "A simple TypeScript project",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/main.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
