@@ -4,7 +4,8 @@
     "stdbool.h": "c",
     "limits.h": "c",
     "stdlib.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "math.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
