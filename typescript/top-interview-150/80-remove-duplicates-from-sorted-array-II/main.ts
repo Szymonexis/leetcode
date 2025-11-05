@@ -30,15 +30,25 @@ Constraints:
 -104 <= nums[i] <= 104
 nums is sorted in non-decreasing order.
 */
-
 function removeDuplicates(nums: number[]): number {
-	let k = 0;
+	if (nums.length <= 2) return nums.length;
 
-	let i = 0;
-	let j = 0;
-	while (true) {
-    
-  }
+	let k = 2;
+	let i = 2;
+	let j = 2;
+	while (j < nums.length) {
+		if (nums[j] !== nums[i - 2]) {
+			nums[i] = nums[j];
+			i++;
+			k++;
+		}
+
+		j++;
+	}
 
 	return k;
 }
+
+const nums = [0, 0, 1, 1, 1, 1, 2, 3, 3];
+const k = removeDuplicates(nums);
+console.log(k, nums.slice(0, k));
