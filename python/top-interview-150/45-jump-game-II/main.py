@@ -1,4 +1,5 @@
 from typing import List
+import time
 
 
 class BruteForceSolution:
@@ -95,5 +96,16 @@ expected = 3
 nums = [2, 3, 0, 0, 2, 1, 4]
 expected = 3
 
+brute_force_sol_start_ms = time.time_ns() / 1_000_000
+brute_force_sol = BruteForceSolution().jump(nums=nums)
+brute_force_sol_end_ms = time.time_ns() / 1_000_000
+
+sol_start_ms = time.time_ns() / 1_000_000
 sol = Solution().jump(nums=nums)
-print(f"Solution [{sol}] is correct? {expected == sol}")
+sol_end_ms = time.time_ns() / 1_000_000
+print(
+    f"Brute Force Solution [{sol}] is correct? {expected == brute_force_sol}; time: {brute_force_sol_end_ms - brute_force_sol_start_ms} ms"
+)
+print(
+    f"Solution [{sol}] is correct? {expected == sol}; time: {sol_end_ms - sol_start_ms} ms"
+)
